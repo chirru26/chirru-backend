@@ -1,2 +1,19 @@
-.node_modules
+```
+/node_modules
 .env
+dist
+build
+coverage
+*.log
+.DS_Store
+.vscode
+.idea
+*.swp
+*.swo
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/tmp
+# Ignore
+```
