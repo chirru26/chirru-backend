@@ -4,8 +4,17 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
-app.use(cors({ origin:"https://chirru.netlify.app/"})); // For production, use: cors({ origin: "https://your-frontend-domain" })
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://chirru.netlify.app"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
+ 
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.send(`
@@ -41,15 +50,15 @@ app.post("/api/contact", async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.MAIL_USER, 
-      pass: process.env.MAIL_PASS, 
+      user: process.env.MAIL_USER, // set in .env
+      pass: process.env.MAIL_PASS, // set in .env
     },
   });
 
   try {
     await transporter.sendMail({
       from: email,
-      to: process.env.MAIL_RECEIVER, 
+      to: process.env.MAIL_RECEIVER, // set in .env (your receiving email)
       subject: `Contact from ${name}`,
       text: message,
       html: `<p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p>${message}</p>`,
